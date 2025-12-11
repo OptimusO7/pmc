@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - PMC</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .alert {
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      font-weight: 500;
+    }
+    .alert-success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .alert-error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-wrapper">
+        <div class="logo">
+          <a href="/">PMC</a>
+        </div>
+        <button class="menu-toggle" id="menuToggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/executives">Executives</a></li>
+          <li><a href="/activities">Activities</a></li>
+          <li><a href="/conference">Conference 2025</a></li>
+          <li><a href="/gallery">Gallery</a></li>
+          <li><a href="/news">News</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="page-header">
+    <div class="container">
+      <h1>Contact Us</h1>
+      <p>We'd love to hear from you</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="contact-wrapper">
+        <div class="contact-form">
+          <h2>Send us a Message</h2>
+          
+          <div id="alertContainer"></div>
+          
+          <form method="POST" action="/api/contact" id="contactForm">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject">
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="cta-btn">Send Message</button>
+          </form>
+        </div>
+        <div class="contact-info-section">
+          <h2>Get in Touch</h2>
+          <div class="contact-item">
+            <h3>📍 Address</h3>
+            <p>123 Grace Avenue<br>Holy City, ST 12345<br>United States</p>
+          </div>
+          <div class="contact-item">
+            <h3>📞 Phone</h3>
+            <p>(555) 123-4567<br>(555) 987-6543</p>
+          </div>
+          <div class="contact-item">
+            <h3>✉️ Email</h3>
+            <p>info@pmcgathering.org<br>events@pmcgathering.org</p>
+          </div>
+          <div class="contact-item">
+            <h3>Follow Us</h3>
+            <div class="social-links">
+              <a href="#" class="social-link">Facebook</a>
+              <a href="#" class="social-link">Twitter</a>
+              <a href="#" class="social-link">Instagram</a>
+              <a href="#" class="social-link">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h3>About PMC</h3>
+          <p>A gathering of Presbyterian Ministers' Children, committed to faith, community, and spiritual growth.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/conference">Conference</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Connect</h3>
+          <div class="social-icons">
+            <a href="#" class="social-icon">f</a>
+            <a href="#" class="social-icon">t</a>
+            <a href="#" class="social-icon">ig</a>
+            <a href="#" class="social-icon">in</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Presbyterian Ministers' Children. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script>
+    // Check for success/error messages
+    const urlParams = new URLSearchParams(window.location.search);
+    const alertContainer = document.getElementById('alertContainer');
+    
+    if (urlParams.get('sent') === 'true') {
+      alertContainer.innerHTML = `
+        <div class="alert alert-success">
+          ✓ Thank you! Your message has been sent successfully. We'll get back to you soon.
+        </div>
+      `;
+      // Clear form
+      document.getElementById('contactForm').reset();
+      // Remove query parameter from URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+    
+    if (urlParams.get('error') === 'true') {
+      alertContainer.innerHTML = `
+        <div class="alert alert-error">
+          ✗ Sorry, there was an error sending your message. Please try again later.
+        </div>
+      `;
+      // Remove query parameter from URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  </script>
+</body>
+</html>
